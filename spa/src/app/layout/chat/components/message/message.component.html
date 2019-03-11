@@ -1,0 +1,113 @@
+<div class="panel message" [ngClass]="{'panel-info': message.mine, 'panel-warning': !message.mine}">
+  <div class="panel-body" [ngClass]="{mine: message.mine, 'global':globalInfo}">
+      <div *ngIf="!message.mine && !globalInfo" class="avatar">
+        <img src="assets/img/generic-avatar.png" alt="avatar" height="57px" width="50px">
+      </div>
+
+      <div class="msg-text-container">
+        <a (click)="userDetails(userContent, userError)" class="btn btn-default btn-lg" *ngIf="!globalInfo">  <h5 class="panel-title"><strong>{{message.from}}</strong></h5></a>
+		<ng-template #userContent let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title">{{message.from}}'s profile</h4>
+			    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+                <div class="modal-body">
+					<p>Mail: {{fromUser.mail}}</p>
+					<p>Role: {{fromUser.role}}</p>
+					<p>Num of likes on all his message: {{fromUser.numOfLikes}}</p>
+					<p>Num of dislikes on all his message: {{fromUser.numOfDislikes}}</p>
+                </div>
+                <div class="modal-footer">
+            </div>
+        </ng-template>
+		<ng-template #userError let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title">{{message.from}}'s profile</h4>
+			    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+                <div class="modal-body">
+					<p>This user has been removed</p>
+                </div>
+                <div class="modal-footer">
+            </div>
+        </ng-template>
+        <!--<p class="msg-text">{{message.text | linkify}}</p>-->
+		<div class="msg-text" [innerHTML]="message.text | linkify "></div>
+		<div class="row" *ngIf="!globalInfo">
+		<p>{{message.date}} </p>
+        <p class="panel-title" id="time" [ngClass]="{'fade-in': fadeTime}"><small>   • {{time}}</small></p>
+		</div>
+		<div class="row" *ngIf="!globalInfo">
+		<a (click)="like(errorLikeContent)"  class="btn btn-default btn-lg" style="color:black;">
+			<i  class="fa fa-thumbs-o-up"></i></a>
+		<ng-template #errorLikeContent let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title">Unauthorized</h4>
+			    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+                <div class="modal-body">
+					<p>You already liked this message</p>
+                </div>
+                <div class="modal-footer">
+            </div>
+        </ng-template>
+		<a (click)="unlike(errorDislikeContent)"  class="btn btn-default btn-lg" style="color:black;">
+			<i  class="fa fa-thumbs-o-down"></i>
+			<ng-template #errorDislikeContent let-c="close" let-d="dismiss" >
+            <div class="modal-header">
+                <h4 class="modal-title">Unauthorized</h4>
+			    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+					<span aria-hidden="true">&times;</span>
+				</button>
+            </div>
+                <div class="modal-body">
+					<p>You already disliked this message</p>
+                </div>
+                <div class="modal-footer">
+            </div>
+			</ng-template>
+		</a>
+		<a (click)="openContent(likeContent)" class="btn btn-default btn-lg" style="color:black; font-size: 12px">
+			Num of likes: {{message.like}}</a>
+                <ng-template #likeContent let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">List of users that liked</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<p *ngFor="let user of message.listUserLike">{{user.name}}</p>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+		<a (click)="openContent(dislikeContent)" class="btn btn-default btn-lg" style="color:black; font-size: 12px">
+			Num of dislikes: {{message.unlike}}</a>
+                <ng-template #dislikeContent let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">List of users that disliked</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<p *ngFor="let user of message.listUserUnlike">{{user.name}}</p>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+      </div>
+      </div>
+
+    <div *ngIf="message.mine" class="avatar">
+       <img src="assets/img/generic-avatar.png" alt="avatar" height="57px" width="50px">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<!--<div #gmap style="width:100%;height:400px"></div>-->
+<div class="container">
+	<div>
+        <h3><b>STORES</b></h3><br>
+		<h6>Check where are located our stores</h6>
+    </div>
+	<br>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Branch number</th>
+	  <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let store of stores">
+	
+      <td>{{ store.name }}</td>
+      <td>{{ store.branchNum }}</td>
+	  <td>{{ store.address}}</td>
+	  <a (click)="findLocation(store.lon, store.lat)"  class="btn btn-default btn-lg" style="font-size:36px; color:black;">
+      <i  class="fa fa-map-marker"></i>
+	</a>
+    </tr>
+    </tbody>
+  </table>
+  
+  
+</div>
+
+<div id="map" class="map"></div>

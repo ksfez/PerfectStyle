@@ -1,0 +1,101 @@
+<div ng-app="myModal" ng-controller="myCtrl" class="container">
+  <h3><b>ACCESSORIES</b></h3><br>
+  <h6>Complete your look with statement jewelry, versatile bags and seasonal staples.</h6>
+  <div style="text-align:right;  visibility:hidden;" id="AddAccessorie">
+  <a (click)="open(content)"  class="btn btn-default btn-lg" style="color:pink;" >
+      <i  class="fa fa-plus"></i> Add new accessorie</a>
+                <ng-template #content let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New accessories</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<form role="form" (ngSubmit)="saveAccessorie()" #accessorieForm="ngForm">
+						<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="message !== ''">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{message}}
+						</div>
+							<div class="form-group">
+								<label for="name">id</label>
+								<input type="text" class="form-control" [(ngModel)]="accessorie.id" name="id" required>
+							</div>
+							<div class="form-group">
+								<label for="name">name</label>
+								<input type="text" class="form-control" [(ngModel)]="accessorie.name" name="name" required>
+							</div>
+							<div class="form-group">
+								<label for="name">color</label>
+								<input type="text" class="form-control" [(ngModel)]="accessorie.color" name="color" required>
+							</div>
+							<div class="form-group">
+								<label for="name">price</label>
+								<input type="number" class="form-control" [(ngModel)]="accessorie.price" name="price" required>
+							</div>
+							<div class="form-group">
+								<label for="name">img</label>
+								<input type="text" class="form-control" [(ngModel)]="accessorie.img" name="img" required>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-success" [disabled]="!accessorieForm.form.valid">Save</button>
+							</div>
+						</form>
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-secondary" (click)="saveAccessorie()">Save</button>-->
+                    </div>
+                </ng-template>
+    </div>
+</div>
+
+
+<div style="text-align:right;  visibility:hidden;" id="DeleteShoe">
+                <ng-template #deleteContent let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Accessories</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<div class="alert alert-warning alert-dismissible" role="alert">
+							ARE YOU SURE THAT YOU WANT TO DELETE THIS ITEM?
+						</div>
+						<button type="submit" class="btn btn-success" (click)="deleteAccessorie(accessorie._id)">YES</button>
+						<button type="submit" style="margin-left:0" class="btn btn-danger" (click)="d('Cross click')" >NO</button>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+    </div>
+
+<div class="container" id="AccessoriesPanel">
+  <br><br>
+  <div class="row">
+    <div class="panel panel-info" *ngFor="let accessorie of accessories">
+	<div id="DeleteAccessorie" *ngIf="getJwtToken()!==0" >
+	<a (click)="openDelete(deleteContent,accessorie)" class="btn btn-danger" style="color:white;">
+      <i  class="fa fa-remove"></i>
+	</a>
+	</div>
+      <div class="panel-body"> 
+      <span>
+        <img class ="flowering" src="{{ accessorie.img }}" >
+      </span>
+	  </div>
+	  <div  class="panel-footer" style="text-align:center;"> 
+	  <label> <b>{{ accessorie.name }}</b></label>
+        <div> {{ accessorie.price }} $</div>
+		 <div id="AddItemToWhishlist" *ngIf="getConnected()!==0" >
+	 <a (click)="addAccessorieToWhishlist(accessorie)" class="btn btn-default" style="color:pink;"  > Add to my bag </a>
+	
+	</div>
+	 
+	 
+	  
+    </div>
+  </div>
+  
+  
+</div>

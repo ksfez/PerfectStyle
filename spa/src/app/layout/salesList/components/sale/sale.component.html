@@ -1,0 +1,100 @@
+<div ng-app="myModal" ng-controller="myCtrl" class="container">
+  <h3><b>SALES</b></h3><br>
+  <h6>Get the dresses, accessories and clothing you want at marked-down prices.</h6>
+  <div style="text-align:right;  visibility:hidden;" id="AddSale">
+  <a (click)="open(content)"  class="btn btn-default btn-lg" style="color:pink;" >
+      <i  class="fa fa-plus"></i> Add new sales</a>
+                <ng-template #content let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New sales</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<form role="form" (ngSubmit)="saveSale()" #saleForm="ngForm">
+						<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="message !== ''">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{message}}
+						</div>
+							<div class="form-group">
+								<label for="name">id</label>
+								<input type="text" class="form-control" [(ngModel)]="sale.id" name="id" required>
+							</div>
+							<div class="form-group">
+								<label for="name">name</label>
+								<input type="text" class="form-control" [(ngModel)]="sale.name" name="name" required>
+							</div>
+							<div class="form-group">
+								<label for="name">color</label>
+								<input type="text" class="form-control" [(ngModel)]="sale.color" name="color" required>
+							</div>
+							<div class="form-group">
+								<label for="name">price</label>
+								<input type="number" class="form-control" [(ngModel)]="sale.price" name="price" required>
+							</div>
+							<div class="form-group">
+								<label for="name">img</label>
+								<input type="text" class="form-control" [(ngModel)]="sale.img" name="img" required>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-success" [disabled]="!saleForm.form.valid">Save</button>
+							</div>
+						</form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+    </div>
+</div>
+
+  <div style="text-align:right;  visibility:hidden;" id="DeleteSale">
+                <ng-template #deleteContent let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Shoes</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<div class="alert alert-warning alert-dismissible" role="alert">
+							ARE YOU SURE THAT YOU WANT TO DELETE THIS ITEM?
+						</div>
+						<button type="submit" class="btn btn-success" (click)="deleteSale(sale._id)">YES</button>
+						<button type="submit" style="margin-left:0" class="btn btn-danger" (click)="d('Cross click')" >NO</button>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+    </div>
+
+
+<div class="container" id="SalesPanel">
+  <br><br>
+  <div class="row">
+    <div class="panel panel-info" *ngFor="let sale of sales">
+	<div id="DeleteSale" *ngIf="getJwtToken()!==0" >
+	<a (click)="openDelete(deleteContent,sale)" class="btn btn-danger" style="color:white;">
+      <i  class="fa fa-remove"></i>
+	</a>
+	</div>
+      <div class="panel-body"> 
+      <span>
+        <img class ="flowering" src="{{ sale.img }}" >
+      </span>
+	  </div>
+	  <div  class="panel-footer" style="text-align:center;"> 
+	  <label> <b>{{ sale.name }}</b></label>
+        <div> {{ sale.price }} $</div>
+		 <div id="AddItemToWhishlist" *ngIf="getConnected()!==0" >
+	 <a (click)="addSaleToWhishlist(sale)" style="color:pink;" class="btn btn-default" > Add to my bag </a>
+	
+	</div>
+	 
+	 
+	  
+    </div>
+  </div>
+  
+  
+</div>

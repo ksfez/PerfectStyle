@@ -1,0 +1,101 @@
+<div ng-app="myModal" ng-controller="myCtrl" class="container">
+  <h3><b>CASUAL DRESSES</b></h3><br>
+  <h6>Find fit-and-flare, relaxed-fit, maxi, mini and midi dresses for all occasions.</h6>
+  <div style="text-align:right;  visibility:hidden;" id="AddCasual">
+  <a (click)="open(content)"  class="btn btn-default btn-lg" style="color:pink;" >
+      <i  class="fa fa-plus"></i> Add new casual dresses</a>
+                <ng-template #content let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New casual dresses</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<form role="form" (ngSubmit)="saveCasual()" #casualForm="ngForm">
+						<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="message !== ''">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{message}}
+						</div>
+							<div class="form-group">
+								<label for="name">id</label>
+								<input type="text" class="form-control" [(ngModel)]="casual.id" name="id" required>
+							</div>
+							<div class="form-group">
+								<label for="name">name</label>
+								<input type="text" class="form-control" [(ngModel)]="casual.name" name="name" required>
+							</div>
+							<div class="form-group">
+								<label for="name">color</label>
+								<input type="text" class="form-control" [(ngModel)]="casual.color" name="color" required>
+							</div>
+							<div class="form-group">
+								<label for="name">price</label>
+								<input type="number" class="form-control" [(ngModel)]="casual.price" name="price" required>
+							</div>
+							<div class="form-group">
+								<label for="name">img</label>
+								<input type="text" class="form-control" [(ngModel)]="casual.img" name="img" required>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-success" [disabled]="!casualForm.form.valid">Save</button>
+							</div>
+						</form>
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-secondary" (click)="saveCasual()">Save</button>-->
+                    </div>
+                </ng-template>
+    </div>
+</div>
+
+
+  <div style="text-align:right;  visibility:hidden;" id="DeleteCasual">
+                <ng-template #deleteContent let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Casual dress</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<div class="alert alert-warning alert-dismissible" role="alert">
+							ARE YOU SURE THAT YOU WANT TO DELETE THIS ITEM?
+						</div>
+						<button type="submit" class="btn btn-success" (click)="deleteCasual(casual._id)">YES</button>
+						<button type="submit" style="margin-left:0" class="btn btn-danger" (click)="d('Cross click')" >NO</button>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </ng-template>
+    </div>
+
+<div class="container" id="CasualsPanel">
+  <br><br>
+  <div class="row">
+    <div class="panel panel-info" *ngFor="let casual of casuals">
+	<div id="DeleteCasual" *ngIf="getJwtToken()!==0" >
+	<a (click)="openDelete(deleteContent,casual)" class="btn btn-danger" style="color:white;">
+      <i  class="fa fa-remove"></i>
+	</a>
+	</div>
+      <div class="panel-body"> 
+      <span>
+        <img class ="flowering" src="{{ casual.img }}" >
+      </span>
+	  </div>
+	  <div  class="panel-footer" style="text-align:center;"> 
+	  <label> <b>{{ casual.name }}</b></label>
+        <div> {{ casual.price }} $</div>
+		 <div id="AddItemToWhishlist" *ngIf="getConnected()!==0" >
+	 <a (click)="addCasualToWhishlist(top)" class="btn btn-default" style="color:pink;"  > Add to my bag </a>
+	
+	</div>
+	 
+	 
+	  
+    </div>
+  </div>
+  
+  
+</div>

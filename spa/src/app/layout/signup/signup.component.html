@@ -1,0 +1,55 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <h3>Sign Up</h3>
+			<br>
+            <form (ngSubmit)="signup()" #signupForm="ngForm">
+				<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="message !== ''">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					{{message}}
+			    </div>
+                <div class="form-content">
+                    <div class="form-group">
+				
+                        <input type="text" class="form-control input-underline input-lg" placeholder="Full Name"  [(ngModel)]="signupData.name" name="name" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control input-underline input-lg" placeholder="Email" [(ngModel)]="signupData.mail" name="mail" required/>
+
+        
+					</div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg" placeholder="Password" [(ngModel)]="signupData.password" name="password" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg" placeholder="Repeat Password" [(ngModel)]="passwordData.password" name="password2" required/>
+                    </div>
+					 <div class="form-group">
+                        <div id="fileSelector">
+                        <input type="file" name="fileUplaod" id="fileUpload"
+                        multiple ng2FileSelect [uploader]="uploader" required/>
+                    </div>
+                    <div>
+                        <div class="row uploadList" *ngFor="let item of uploader.queue">
+                            <div class="col-sm-4">{{item.file.name}}</div>
+                            <div class="col-sm-4">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" 
+                                    [ngStyle]="{'width':item.progress+'%'}"></div>
+                                </div>
+                            </div>
+                            <button type="button"  style="background-color:pink; color:white" (click)="item.upload()">Upload</button>
+                              <button type="button"  style="background-color:red; color:white"  (click)="item.remove()">Cancel</button>
+                           
+                        </div>                        
+                    </div>
+					</div>
+					
+                </div>
+				<button  class="btn rounded-btn" type="submit" [disabled]="!signupForm.form.valid" >Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>

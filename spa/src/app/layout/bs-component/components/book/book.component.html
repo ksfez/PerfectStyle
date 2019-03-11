@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>Book List</h1>
+  <a [routerLink]="['/book-create']" class="btn btn-default btn-lg">
+      <i  class="fa fa-plus"></i>
+  </a>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let book of books">
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td><a [routerLink]="['/book-details', book._id]"> Show Details</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

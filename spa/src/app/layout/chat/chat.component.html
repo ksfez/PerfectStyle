@@ -1,0 +1,90 @@
+<div class="container-fluid chat-container">
+    <div>
+        <h3><b>CHAT</b></h3><br>
+		<h6>Interact with our professionnals of the style and with other clients to get and give advices.</h6>
+    </div>
+	<div style="text-align:right">
+	<a (click)="openContent(content)" id="AddChatRoom" class="btn btn-default btn-lg" style="color:pink;margin-top:19px;visible:hidden;">
+			<i  class="fa fa-plus"></i> Create a new chat room</a>
+			<ng-template #content let-c="close" let-d="dismiss" >
+                    <div class="modal-header">
+                        <h4 class="modal-title">Create a chat room</h4>
+						<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+							<span aria-hidden="true">&times;</span>
+						</button>
+                    </div>
+                    <div class="modal-body">
+						<form role="form" (ngSubmit)="saveChatRoom()" #chatForm="ngForm">
+						<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="message !== ''">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{message}}
+						</div>
+							<div class="form-group">
+								<label for="name">Name:</label>
+								<input type="text" class="form-control" [(ngModel)]="newdataChatRoom.newRoom" name="name" required>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-success" [disabled]="!chatForm.form.valid">Save</button>
+							</div>
+						</form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+            </ng-template>
+	</div>
+	
+	<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="messageInfo !== ''">
+			{{messageInfo}}
+	</div>
+		
+    <div class="row">
+        <div class="col-sm-5">
+			<label for="roomInput"><h5>Choose conversation</h5></label>
+            <select name="roomInput" id="roomInput" class="form-control" [(ngModel)]="room" (change)="roomSelected(room)">
+				<option *ngFor="let chatRoom of chatRooms">{{chatRoom.name}}</option>
+            </select>
+        </div>
+		<div class="col-sm-5">
+            <div style="margin-top:42px;" class="row"> 
+				<div class="col-sm-2">
+                <button type="button" class="btn btn-default" (click)="join()">Join</button>
+				</div>
+				<div class="col-sm-2">
+                <button type="button" class="btn btn-default" (click)="leave()">Leave</button>
+				</div>
+				<div class="col-sm-4"></div>
+            </div>
+        </div>
+		<div class="col-sm-2">
+			<div class="search-container" style="margin-top:35px;">
+				<input type="text" placeholder="Search.." name="search" [(ngModel)]="searchWord">
+			</div>
+		</div>
+    </div>  
+		
+<div class="row" style="margin-top:15px">
+	<div class="col-sm-3 col-lg-2 active-list-container" id="ActiveList">
+		<h5 style="color:pink">Members</h5>
+		<div *ngFor="let member of members" class="row" style="margin-left:10px">
+		<div> <b>{{member.name}}</b></div>
+		<div *ngIf="member.connected == 'true'">: On line</div>
+		</div>
+    </div>
+
+	<div class="col-sm-9 col-lg-10 column">
+    <div #scrollMe class="panel-body msg-container" [scrollTop]="scrollMe.scrollHeight">
+        <div   class="well" style="height:300px; padding:15px;">
+			<app-message *ngFor="let item of messageArray | filter: searchWord " [message]="item"></app-message>
+        </div>
+    </div>
+    <div class="row" style="margin-left:15px;">
+        <div class="col-sm-10" >
+            <input type="text" class="form-control" [(ngModel)]="messageText" placeholder="Type your message...">            
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-default pull-right" (click)="sendMessage()">Send</button>
+        </div>
+    </div>
+    </div>
+	
+</div>

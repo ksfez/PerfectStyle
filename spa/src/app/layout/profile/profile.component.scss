@@ -1,0 +1,9 @@
+
+a{
+	margin-left:20%;
+	text-align: center;
+	color:black;
+	&:hover {
+                text-decoration: underline;
+            }
+}

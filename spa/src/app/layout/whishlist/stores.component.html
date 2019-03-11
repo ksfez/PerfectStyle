@@ -1,0 +1,30 @@
+<div>
+<div class="container" id="ItemsPanel">
+  <br><br>
+  <div class="row">
+    <div class="panel panel-info" *ngFor="let item of items">
+	<div id="DeleteItem" >
+	<a (click)="deleteItem(item._id)" class="btn btn-danger" style="color:white;">
+      <i  class="fa fa-remove"></i>
+	</a>
+	</div>
+      <div class="panel-body"> 
+      <span>
+        <img class ="flowering" src="{{ item.img }}" >
+      </span>
+	  </div>
+	  <div  class="panel-footer" style="text-align:center;"> 
+	  <label> <b>{{ item.name }}</b></label>
+        <div> {{ item.price }} $</div>
+      </div>
+	  
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;">
+
+<ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+</div>

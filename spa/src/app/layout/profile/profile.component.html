@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    
+     <div class="col-md-6">
+
+      <h1 class="form-signin-heading">EDIT ACCOUNT</h1>
+	  <br>
+	  <h6>Creating an account lets you check out with ease updates and offers from MyPerfectStyle.</h6>
+      <br>
+            <form (ngSubmit)="update()" #updateForm="ngForm">
+				<div class="alert alert-warning alert-dismissible" role="alert" *ngIf="message !== ''">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					{{message}}
+			    </div>
+                <div class="form-content">
+                    <div class="form-group">
+						<label>Name:</label>
+                        <input type="text" class="form-control input-underline input-lg" [(ngModel)]="updateData.name" name="name" required/>
+                    </div>
+
+                    <div class="form-group">
+						<label>Mail:</label>
+                        <input type="email" class="form-control input-underline input-lg" [(ngModel)]="updateData.mail" name="mail" required/>
+					</div>
+
+                    <div class="form-group">
+						<label>Password:</label>
+                        <input type="password" class="form-control input-underline input-lg" [(ngModel)]="updateData.password" name="password" required/>
+                    </div>
+                    <div class="form-group">
+						<label>Repeat Password:</label>
+                        <input type="password" [(ngModel)]="passwordData.password" name="password2" class="form-control input-underline input-lg">
+                    </div>
+					 <div class="form-group">
+					 <label>Picture:</label>
+                        <div id="fileSelector">
+                        <input type="file" name="fileUplaod" id="fileUpload"
+                        multiple ng2FileSelect [uploader]="uploader">
+                    </div>
+                    <div>
+                        <div class="row uploadList" *ngFor="let item of uploader.queue">
+                            <div class="col-sm-4">{{item.file.name}}</div>
+                            <div class="col-sm-4">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" 
+                                    [ngStyle]="{'width':item.progress+'%'}"></div>
+                                </div>
+                            </div>
+                            <button type="button"  style="background-color:pink; color:white" (click)="item.upload()">Upload</button>
+                              <button type="button"  style="background-color:red; color:white"  (click)="item.remove()">Cancel</button>
+                           
+                        </div>                        
+                    </div>
+					</div>
+                </div>
+				<button class="btn rounded-btn" type="submit" [disabled]="!updateForm.form.valid">Submit</button>
+            </form>
+
+    </div>
+
+  </div>
+</div>

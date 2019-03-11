@@ -1,0 +1,48 @@
+@import "../../../../../assets/sass/to-import.scss";
+
+.panel-body {
+  @include display-flex();
+
+  margin: 15px;
+  border-radius: 25px;
+  background: #b3b3ff;
+  box-sizing: border-box;
+  box-shadow: 5px 5px #888888;
+	
+  &.mine {
+    @include justify-content(flex-end);
+    text-align: right;
+	border-radius: 25px;
+    background: #66ff99;
+  }
+  
+  &.global {
+    text-align: center;
+    background: yellow;
+  }
+
+  .avatar {
+    height: 57px;
+    width: 50px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .msg-text-container {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .msg-text {
+      margin-top: 12px;
+    }
+  }
+}
+
+#time {
+  @include opacity(0);
+  @include transition("opacity .2s ease-in 0s");
+
+  &.fade-in {
+    @include opacity(1);
+  }
+}
